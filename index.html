@@ -5,63 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>日野森志歩</title>
     <script>
-        const popupCount = 1000; // 一度に生成するポップアップの数
-        const imageCount = 66;  // 使用する画像の総数
-
-        function getRandomPosition(max) {
-            return Math.floor(Math.random() * max);
-        }
-
-        function getRandomImage() {
-            const imageNumber = String(Math.floor(Math.random() * imageCount) + 1).padStart(3, '0');
-            return `images/image${imageNumber}.jpg`; // 画像ファイルの名前を生成
-        }
-
-        function createPopup() {
-            for (let i = 0; i < popupCount; i++) {
-                const imageUrl = getRandomImage();
-
-                // 画像のロードが完了したらポップアップを生成
-                const img = new Image();
-                img.onload = function() {
-                    const width = img.width;
-                    const height = img.height;
-                    const left = getRandomPosition(window.screen.width - width);
-                    const top = getRandomPosition(window.screen.height - height);
-
-                    const popupWindow = window.open("", "popupWindow" + i, `width=${width},height=${height},left=${left},top=${top}`);
-                    if (popupWindow) {
-                        popupWindow.document.write(`
-                            <html lang="ja">
-                            <head>
-                                <meta charset="UTF-8">
-                                <title>日野森志歩</title>
-                                <style>
-                                    body { margin: 0; display: flex; align-items: center; justify-content: center; height: 100%; }
-                                    img { max-width: 100%; height: auto; }
-                                </style>
-                            </head>
-                            <body>
-                                <img src="${imageUrl}" alt="ランダム画像">
-                            </body>
-                            </html>
-                        `);
-
-                        // ポップアップが閉じられたら新しいポップアップを生成
-                        popupWindow.onunload = function() {
-                            setTimeout(createPopup, 10); // 0.2秒後に新しいポップアップを生成
-                        };
-                    } else {
-                        alert("ポップアップウィンドウを開けませんでした。ポップアップブロッカーを無効にしてください。");
-                    }
-                };
-                img.src = imageUrl;
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', (event) => {
-            createPopup();
-        });
+        const p=10,i=66;
+        function r(m){return Math.floor(Math.random()*m);}
+        function g(){const n=String(Math.floor(Math.random()*i)+1).padStart(3,'0');return`images/image${n}.jpg`;}
+        function c(){for(let j=0;j<p;j++){const u=g(),m=new Image();m.onload=function(){const w=Math.min(m.width,window.screen.width*0.8),h=Math.min(m.height,window.screen.height*0.8),l=r(window.screen.width-w),t=r(window.screen.height-h),o=window.open("","popupWindow"+j,`width=${w},height=${h},left=${l},top=${t}`);if(o){o.document.write(`<html lang="ja"><head><meta charset="UTF-8"><title>日野森志歩</title><style>body{margin:0;display:flex;align-items:center;justify-content:center;height:100%;}img{max-width:100%;height:auto;}button{position:absolute;top:10px;right:10px;padding:5px 10px;}</style></head><body><img src="${u}" alt="ランダム画像"><button onclick="window.close();">閉じる</button></body></html>`);o.onunload=function(){setTimeout(c,200);};}else{alert("ポップアップウィンドウを開けませんでした。ポップアップブロッカーを無効にしてください。");}};m.onerror=function(){console.error(`画像の読み込みに失敗しました: ${u}`);};m.src=u;}}
+        document.addEventListener('DOMContentLoaded',()=>{c();});
     </script>
 </head>
 <body>
